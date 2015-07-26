@@ -1,0 +1,25 @@
+{
+  "name": "etki/php-streams",
+  "description": "Basic streams implementation",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Etki",
+      "email": "etki@etki.name"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Etki\\Kit\\Stream\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">= 7.0",
+    "codeception/codeception": "~2.1",
+    "etki/streams-api": "~0.1.0"
+  },
+  "config": {
+    "bin-dir": "bin"
+  }
+}
