@@ -2,7 +2,6 @@
 
 namespace Etki\Kit\Stream;
 
-use Etki\Specification\Api\Stream\Exception\ClosedStreamOperationException;
 use Etki\Specification\Api\Stream\Exception\InvalidDataArrayContentException;
 use Etki\Specification\Api\Stream\Exception\InvalidPositionException;
 use Etki\Specification\Api\Stream\ReadableStreamInterface;
@@ -17,19 +16,11 @@ use Etki\Specification\Api\Stream\WritableStreamInterface;
  * @package Etki\Kit\Stream
  * @author  Etki <etki@etki.name>
  */
-class ArrayStream implements
+class ArrayStream extends AbstractStream implements
     ReadableStreamInterface,
     WritableStreamInterface,
     SeekableStreamInterface
 {
-    /**
-     * Flag that reports current stream state.
-     *
-     * @type bool
-     * @since 0.1.0
-     */
-    private $isActive = true;
-
     /**
      * Internal content.
      *
@@ -58,6 +49,7 @@ class ArrayStream implements
         if ($initialContent) {
             $this->write($initialContent);
         }
+        $this->setOpened();
     }
 
     /**
@@ -68,18 +60,7 @@ class ArrayStream implements
      */
     public function close()
     {
-        $this->isActive = false;
-    }
-
-    /**
-     * Tells if stream is already closed.
-     *
-     * @return bool
-     * @since 0.1.0
-     */
-    public function isClosed()
-    {
-        return !$this->isActive;
+        $this->setClosed();
     }
 
     /**
@@ -155,19 +136,5 @@ class ArrayStream implements
             throw new InvalidPositionException;
         }
         $this->cursor = $position;
-    }
-
-    /**
-     * Internal method to throw exception whenever somebody tries to access
-     * closed stream.
-     *
-     * @return void
-     * @since 0.1.0
-     */
-    private function assertIsOpened()
-    {
-        if (!$this->isActive) {
-            throw new ClosedStreamOperationException;
-        }
     }
 }

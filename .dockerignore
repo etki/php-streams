@@ -1,0 +1,13 @@
+#vendor
+#composer.lock
+#bin
+#resources
+#!resources/docker
+#LICENSE
+#*.md
+*
+!composer.json
+!codeception.yml
+!resources/docker
+!src
+!tests
